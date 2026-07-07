@@ -7,9 +7,9 @@ export default {
         mono: ['"IBM Plex Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
       },
       colors: {
-        paper: '#f4f1ea',
+        paper: '#ffffff',
         ink: '#1a1a1a',
-        rule: '#c9c4b8',
+        rule: '#999999',
         muted: '#6b6657',
         link: '#1a4e8a',
         visited: '#6a3d8f',
@@ -17,7 +17,7 @@ export default {
         success: '#2d5a2d',
         warning: '#8a5a1a',
         error: '#8a1a1a',
-        panel: '#ebe6d8',
+        panel: '#f0f0f0',
       },
       maxWidth: {
         prose: '680px',
