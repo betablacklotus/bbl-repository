@@ -48,6 +48,19 @@ export function AdminPanel({ onLogout }: AdminPanelProps) {
     setTimeout(() => setMessage(''), 3000);
   };
 
+  const handleSaveAndView = (post: Post) => {
+    if (post.pinned) {
+      pinPost(post.slug);
+      updatePost(post.slug, { ...post, pinned: true });
+    } else {
+      unpinPost(post.slug);
+      updatePost(post.slug, post);
+    }
+    refresh();
+    setEditing(null);
+    window.open(`/${post.slug}`, '_blank', 'noopener');
+  };
+
   const handleReset = () => {
     if (confirm('Reset all posts to the original samples? This will discard your changes.')) {
       resetPosts();
@@ -58,7 +71,7 @@ export function AdminPanel({ onLogout }: AdminPanelProps) {
   };
 
   if (editing) {
-    return <PostEditor post={editing} onSave={handleSave} onCancel={() => setEditing(null)} />;
+    return <PostEditor post={editing} onSave={handleSave} onSaveAndView={handleSaveAndView} onCancel={() => setEditing(null)} />;
   }
 
   const blockedIPs = getBlockedIPs();
@@ -227,7 +240,7 @@ function SecuritySection({ blockedIPs, failedAttempts }: { blockedIPs: ReturnTyp
 }
 
 // Post editor
-function PostEditor({ post, onSave, onCancel }: { post: Post; onSave: (p: Post) => void; onCancel: () => void }) {
+function PostEditor({ post, onSave, onSaveAndView, onCancel }: { post: Post; onSave: (p: Post) => void; onSaveAndView: (p: Post) => void; onCancel: () => void }) {
   const [draft, setDraft] = useState<Post>({ ...post });
   const [tab, setTab] = useState<'content' | 'social' | 'media'>('content');
 
@@ -242,6 +255,7 @@ function PostEditor({ post, onSave, onCancel }: { post: Post; onSave: (p: Post) 
         <div className="flex gap-2">
           <button onClick={onCancel} className="btn">Cancel</button>
           <button onClick={() => onSave(draft)} className="btn btn-primary">Save</button>
+          <button onClick={() => onSaveAndView(draft)} className="btn btn-primary">Save &amp; View</button>
         </div>
       </header>
 
