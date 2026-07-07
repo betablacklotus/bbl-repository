@@ -6,6 +6,7 @@ import { useMeta } from '../seo';
 import { navigate } from '../router';
 import { formatDate } from '../postStore';
 import { downloadRssFeed } from '../rss';
+import { MarkdownEditor } from '../components/MarkdownEditor';
 import type { Post } from '../types';
 
 interface AdminPanelProps {
@@ -342,7 +343,7 @@ function PostEditor({ post, isNew, onSave, onSaveAndView, onCancel }: { post: Po
           </div>
           <div>
             <label className="text-sm block mb-1">Content (Markdown)</label>
-            <textarea value={draft.content} onChange={(e) => update('content', e.target.value)} className="field font-mono" rows={18} style={{ fontSize: 13, lineHeight: 1.6 }} />
+            <MarkdownEditor value={draft.content} onChange={(v) => update('content', v)} rows={18} />
           </div>
           <div>
             <label className="text-sm block mb-1 flex items-center gap-2">

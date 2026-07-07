@@ -434,3 +434,236 @@
   opacity: 0.7;
   white-space: nowrap;
 }
+
+/* ─── Upload drop overlay ────────────────────────────────────────────────────── */
+
+.upload-drop-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(26, 26, 26, 0.88);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  pointer-events: none;
+  border: 2px dashed #f5f5f0;
+}
+
+.upload-drop-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: #f5f5f0;
+  font-size: 13px;
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 0.03em;
+}
+
+/* ─── Upload spinner ─────────────────────────────────────────────────────────── */
+
+.upload-spinner {
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+  border: 2px solid #cccccc;
+  border-top-color: #1a1a1a;
+  border-radius: 50%;
+  animation: upload-spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes upload-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ─── Carousel gallery ────────────────────────────────────────────────────────── */
+
+.gallery-carousel {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  margin: 1.5em 0;
+  padding-bottom: 6px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.gallery-carousel::-webkit-scrollbar {
+  height: 4px;
+}
+.gallery-carousel::-webkit-scrollbar-track {
+  background: #f0f0f0;
+}
+.gallery-carousel::-webkit-scrollbar-thumb {
+  background: #999999;
+}
+
+.gallery-carousel img {
+  flex-shrink: 0;
+  width: 280px;
+  height: 200px;
+  object-fit: cover;
+  scroll-snap-align: start;
+  border: 1px solid #999999;
+  cursor: zoom-in;
+  transition: opacity 0.1s linear;
+  display: block;
+}
+
+.gallery-carousel img:hover {
+  opacity: 0.85;
+}
+
+@media (max-width: 480px) {
+  .gallery-carousel img {
+    width: 220px;
+    height: 160px;
+  }
+}
+
+/* ─── Gallery builder modal ───────────────────────────────────────────────────── */
+
+.gallery-builder-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 500;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 48px 16px 24px;
+  overflow-y: auto;
+}
+
+.gallery-builder-modal {
+  background: #ffffff;
+  border: 1px solid #999999;
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 80px);
+}
+
+.gallery-builder-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid #999999;
+  flex-shrink: 0;
+}
+
+.gallery-builder-close-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+  padding: 4px;
+  color: #1a1a1a;
+  font-family: inherit;
+  border-radius: 0;
+  transition: border-color 0.1s linear;
+}
+
+.gallery-builder-close-btn:hover {
+  border-color: #999999;
+}
+
+.gallery-builder-body {
+  padding: 16px 18px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.gallery-builder-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 2px dashed #cccccc;
+  padding: 40px 20px;
+  margin-bottom: 8px;
+  color: #666666;
+}
+
+.gallery-builder-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.gallery-builder-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #e0e0e0;
+  padding: 8px;
+  background: #fafafa;
+}
+
+.gallery-builder-thumb {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid #e0e0e0;
+  display: block;
+}
+
+.gallery-builder-item-meta {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.gallery-builder-item-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex-shrink: 0;
+}
+
+.gallery-builder-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 12px 18px;
+  border-top: 1px solid #999999;
+  flex-shrink: 0;
+}
+
+.gallery-layout-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-family: 'IBM Plex Mono', monospace;
+  border: 1px solid #999999;
+  background: #ffffff;
+  cursor: pointer;
+  color: #1a1a1a;
+  transition: background-color 0.1s linear, color 0.1s linear;
+}
+
+.gallery-layout-btn:hover {
+  background: #f0f0f0;
+}
+
+.gallery-layout-btn--active {
+  background: #1a1a1a;
+  color: #f5f5f0;
+  border-color: #1a1a1a;
+}
+
+.gallery-layout-btn--active:hover {
+  background: #333333;
+}

@@ -41,6 +41,8 @@ export function renderMarkdown(md: string): string {
   let inCode = false;
   let codeBuffer: string[] = [];
   let galleryBuffer: string[] = [];
+  let inCarousel = false;
+  let carouselBuffer: string[] = [];
 
   const flushGallery = () => {
     if (galleryBuffer.length > 0) {
@@ -68,6 +70,31 @@ export function renderMarkdown(md: string): string {
     }
     if (inCode) {
       codeBuffer.push(line);
+      continue;
+    }
+
+    // Carousel block: :::carousel ... ::: (consecutive image lines become a scroll strip)
+    if (line.trim() === ':::carousel') {
+      flushGallery();
+      if (inList) { html.push(inOl ? '</ol>' : '</ul>'); inList = false; }
+      if (inQuote) { html.push('</blockquote>'); inQuote = false; }
+      inCarousel = true;
+      continue;
+    }
+    if (inCarousel) {
+      if (line.trim() === ':::') {
+        const imgs = carouselBuffer
+          .map((l) => l.match(/^!\[([^\]]*)\]\(([^)]+)\)\s*$/))
+          .filter(Boolean)
+          .map((m) => `<img src="${m![2]}" alt="${m![1]}" loading="lazy" />`);
+        if (imgs.length > 0) {
+          html.push(`<div class="gallery-carousel">${imgs.join('')}</div>`);
+        }
+        carouselBuffer = [];
+        inCarousel = false;
+      } else {
+        carouselBuffer.push(line);
+      }
       continue;
     }
 
@@ -245,6 +272,13 @@ export function renderMarkdown(md: string): string {
   // Close any open blocks
   flushGallery();
   if (inCode) html.push(`<pre><code>${escapeHtml(codeBuffer.join('\n'))}</code></pre>`);
+  if (inCarousel && carouselBuffer.length > 0) {
+    const imgs = carouselBuffer
+      .map((l) => l.match(/^!\[([^\]]*)\]\(([^)]+)\)\s*$/))
+      .filter(Boolean)
+      .map((m) => `<img src="${m![2]}" alt="${m![1]}" loading="lazy" />`);
+    if (imgs.length > 0) html.push(`<div class="gallery-carousel">${imgs.join('')}</div>`);
+  }
   if (inList) html.push(inOl ? '</ol>' : '</ul>');
   if (inQuote) html.push('</blockquote>');
 
@@ -256,6 +290,7 @@ export function excerptFromMarkdown(md: string, maxLen = 180): string {
   const plain = md
     .replace(/^https?:\/\/[^\s]+\.bandcamp\.com\/[^\s]+$/gm, '')
     .replace(/^:::bandcamp-(track|album)\s+\S+$/gm, '')
+    .replace(/^:::carousel$|^:::$/gm, '')
     .replace(/^:::bunny-(video|audio).*$/gm, '')
     .replace(/^#{1,6}\s+/gm, '')
     .replace(/!\[([^\]]*)\]\([^)]+\)/g, '$1')
