@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { MediaProtect } from '../components/MediaProtect';
 import { Lightbox, useLightbox } from '../components/Lightbox';
+import { EditFab } from '../components/EditFab';
 import { renderMarkdown } from '../markdown';
 import { getPost, formatDate, getExcerpt, getBandcampTrackId, getBunnyVideo } from '../postStore';
 
@@ -165,6 +166,8 @@ export function PostPage({ slug }: PostPageProps) {
           onNavigate={navigateLightbox}
         />
       )}
+
+      <EditFab slug={post.slug} />
     </article>
   );
 }function ShareButtons({ url, title, description }: { url: string; title: string; description: string }) {

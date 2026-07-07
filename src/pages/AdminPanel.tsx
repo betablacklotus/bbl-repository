@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { getAllPosts, pinPost, unpinPost, deletePost, updatePost, resetPosts, createPost } from '../postStore';
+import { getAllPosts, pinPost, unpinPost, deletePost, updatePost, resetPosts, createPost, getPost } from '../postStore';
 import { changePassword } from '../adminAuth';
 import { checkPasswordStrength, getBlockedIPs, getRecentFailedAttempts } from '../security';
 import { useMeta } from '../seo';
@@ -16,7 +16,19 @@ export function AdminPanel({ onLogout }: AdminPanelProps) {
   useMeta({ title: 'Admin Panel', description: 'Manage posts.' });
 
   const [posts, setPosts] = useState<Post[]>(getAllPosts());
-  const [editing, setEditing] = useState<Post | null>(null);
+
+  // Support ?edit=slug deep-link from the EditFab on live pages
+  const [editing, setEditing] = useState<Post | null>(() => {
+    const params = new URLSearchParams(window.location.search);
+    const slug = params.get('edit');
+    if (slug) {
+      // Strip the query param from the URL so the browser history stays clean
+      history.replaceState(null, '', window.location.pathname);
+      const found = getPost(slug);
+      if (found) return { ...found };
+    }
+    return null;
+  });
   const [isNew, setIsNew] = useState(false);
   const [showSecurity, setShowSecurity] = useState(false);
   const [message, setMessage] = useState('');

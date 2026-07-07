@@ -1,4 +1,5 @@
 import { useMeta } from '../seo';
+import { EditFab } from '../components/EditFab';
 
 // Split into parts so no literal address appears in the HTML source
 const EM_USER = 'you';
@@ -24,19 +25,22 @@ export function ContactPage() {
   useMeta({ title: 'Contact', description: 'How to reach the author of Beta Black Lotus.' });
 
   return (
-    <div className="max-w-prose mx-auto px-4 sm:px-6 pt-8 sm:pt-10 pb-20">
-      <header className="border-b rule pb-6 mb-8">
-        <h1 className="text-2xl sm:text-3xl font-semibold mb-2">Contact</h1>
-      </header>
+    <>
+      <div className="max-w-prose mx-auto px-4 sm:px-6 pt-8 sm:pt-10 pb-20">
+        <header className="border-b rule pb-6 mb-8">
+          <h1 className="text-2xl sm:text-3xl font-semibold mb-2">Contact</h1>
+        </header>
 
-      <div className="prose-mono">
-        <p>
-          The best way to reach me is by email. I read everything, though I cannot always reply.
-        </p>
-        <p>
-          Write to me at <ObfuscatedEmail />.
-        </p>
+        <div className="prose-mono">
+          <p>
+            The best way to reach me is by email. I read everything, though I cannot always reply.
+          </p>
+          <p>
+            Write to me at <ObfuscatedEmail />.
+          </p>
+        </div>
       </div>
-    </div>
+      <EditFab />
+    </>
   );
 }
