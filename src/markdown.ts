@@ -113,6 +113,22 @@ export function renderMarkdown(md: string): string {
       continue;
     }
 
+    // Bandcamp album player: :::bandcamp-album ALBUM_ID
+    const bandcampAlbumMatch = line.match(/^:::bandcamp-album\s+(\S+)/);
+    if (bandcampAlbumMatch) {
+      flushGallery();
+      if (inList) { html.push(inOl ? '</ol>' : '</ul>'); inList = false; }
+      if (inQuote) { html.push('</blockquote>'); inQuote = false; }
+      const albumId = bandcampAlbumMatch[1];
+      html.push(
+        `<div class="bandcamp-embed">` +
+        `<iframe src="https://bandcamp.com/EmbeddedPlayer/album=${albumId}/size=large/bgcol=ffffff/linkcol=0687f5/minimal=true/transparent=true/" ` +
+        `title="Bandcamp album player" seamless loading="lazy"></iframe>` +
+        `</div>`
+      );
+      continue;
+    }
+
     // Bunny Stream video embed: :::bunny-video libraryId videoId
     const bunnyVideoMatch = line.match(/^:::bunny-video\s+(\S+)\s+(\S+)/);
     if (bunnyVideoMatch) {
@@ -239,7 +255,7 @@ export function renderMarkdown(md: string): string {
 export function excerptFromMarkdown(md: string, maxLen = 180): string {
   const plain = md
     .replace(/^https?:\/\/[^\s]+\.bandcamp\.com\/[^\s]+$/gm, '')
-    .replace(/^:::bandcamp-track\s+\S+$/gm, '')
+    .replace(/^:::bandcamp-(track|album)\s+\S+$/gm, '')
     .replace(/^:::bunny-(video|audio).*$/gm, '')
     .replace(/^#{1,6}\s+/gm, '')
     .replace(/!\[([^\]]*)\]\([^)]+\)/g, '$1')

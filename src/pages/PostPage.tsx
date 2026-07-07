@@ -3,7 +3,7 @@ import { MediaProtect } from '../components/MediaProtect';
 import { Lightbox, useLightbox } from '../components/Lightbox';
 import { EditFab } from '../components/EditFab';
 import { renderMarkdown } from '../markdown';
-import { getPost, formatDate, getExcerpt, getBandcampTrackId, getBunnyVideo } from '../postStore';
+import { getPost, formatDate, getExcerpt, getBandcampEmbed, getBunnyVideo } from '../postStore';
 
 import { postMeta, useMeta } from '../seo';
 import { navigate } from '../router';
@@ -20,16 +20,18 @@ export function PostPage({ slug }: PostPageProps) {
   useMeta(meta);
 
   const bunnyVideo = post ? getBunnyVideo(post) : undefined;
-  const bandcampTrackId = post ? getBandcampTrackId(post) : undefined;
+  const bandcampEmbed = post ? getBandcampEmbed(post) : undefined;
 
   const html = useMemo(() => {
     if (!post) return '';
     let content = post.content.replace(/^\s*#\s[^\n]*\n?/, '');
-    // Strip the embed that is promoted to the cover slot so it doesn't appear twice
+    // Strip the embed promoted to the cover slot so it doesn't appear twice
     if (bunnyVideo) {
       content = content.replace(/^:::bunny-video\s+\S+\s+\S+\s*\n?/m, '');
-    } else if (bandcampTrackId) {
+    } else if (bandcampEmbed?.kind === 'track') {
       content = content.replace(/^:::bandcamp-track\s+\S+\s*\n?/m, '');
+    } else if (bandcampEmbed?.kind === 'album') {
+      content = content.replace(/^:::bandcamp-album\s+\S+\s*\n?/m, '');
     }
     return renderMarkdown(content);
   }, [post]);
@@ -110,10 +112,10 @@ export function PostPage({ slug }: PostPageProps) {
             />
           </div>
         </div>
-      ) : bandcampTrackId ? (
+      ) : bandcampEmbed ? (
         <div className="bandcamp-embed mb-8">
           <iframe
-            src={`https://bandcamp.com/EmbeddedPlayer/track=${bandcampTrackId}/size=large/bgcol=ffffff/linkcol=0687f5/minimal=true/transparent=true/`}
+            src={`https://bandcamp.com/EmbeddedPlayer/${bandcampEmbed.kind}=${bandcampEmbed.id}/size=large/bgcol=ffffff/linkcol=0687f5/minimal=true/transparent=true/`}
             title="Bandcamp player"
             seamless
             loading="lazy"

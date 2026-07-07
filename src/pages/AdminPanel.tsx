@@ -376,38 +376,94 @@ function PostEditor({ post, isNew, onSave, onSaveAndView, onCancel }: { post: Po
       )}
 
       {tab === 'media' && (
-        <div className="flex flex-col gap-4 max-w-prose">
+        <div className="flex flex-col gap-6 max-w-prose">
+
+          {/* ── Bandcamp ── */}
+          <div className="border rule p-4 flex flex-col gap-4">
+            <h3 className="text-sm font-semibold">Bandcamp embed</h3>
+            <p className="text-xs text-muted -mt-2">
+              Enter either a Track ID or Album ID to embed the Bandcamp player at the top of the post.
+              Leave both blank and use <code>:::bandcamp-track ID</code> or <code>:::bandcamp-album ID</code> in the content instead.
+            </p>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label className="text-sm block mb-1">Track ID</label>
+                <input
+                  type="text"
+                  value={draft.bandcampTrackId || ''}
+                  onChange={(e) => update('bandcampTrackId', e.target.value || undefined)}
+                  className="field"
+                  placeholder="e.g. 1234567890"
+                />
+                <p className="text-xs text-muted mt-1">Numeric ID from the Bandcamp track URL.</p>
+              </div>
+              <div>
+                <label className="text-sm block mb-1">Album ID</label>
+                <input
+                  type="text"
+                  value={draft.bandcampAlbumId || ''}
+                  onChange={(e) => update('bandcampAlbumId', e.target.value || undefined)}
+                  className="field"
+                  placeholder="e.g. 9876543210"
+                />
+                <p className="text-xs text-muted mt-1">Numeric ID from the Bandcamp album URL.</p>
+              </div>
+            </div>
+
+            {(draft.bandcampTrackId || draft.bandcampAlbumId) && (
+              <div>
+                <p className="text-xs text-muted mb-2">Preview:</p>
+                <div className="bandcamp-embed">
+                  <iframe
+                    key={`${draft.bandcampTrackId}|${draft.bandcampAlbumId}`}
+                    src={
+                      draft.bandcampTrackId
+                        ? `https://bandcamp.com/EmbeddedPlayer/track=${draft.bandcampTrackId}/size=large/bgcol=ffffff/linkcol=0687f5/minimal=true/transparent=true/`
+                        : `https://bandcamp.com/EmbeddedPlayer/album=${draft.bandcampAlbumId}/size=large/bgcol=ffffff/linkcol=0687f5/minimal=true/transparent=true/`
+                    }
+                    title="Bandcamp preview"
+                    seamless
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* ── Cover image ── */}
           <div>
             <label className="text-sm block mb-1">Cover image URL</label>
             <input type="url" value={draft.featuredImage || ''} onChange={(e) => update('featuredImage', e.target.value)} className="field" placeholder="https://…" />
             <p className="text-xs text-muted mt-1">
-              This image appears full-width at the top of the post, directly beneath the title, and as the thumbnail on the homepage and archive pages.
-              If your post has multiple images, enter the URL of the one you want to use as the cover here.
+              Appears full-width beneath the title and as the thumbnail on listing pages.
+              Ignored if a Bandcamp or Bunny video embed is set (those take priority as the cover).
             </p>
           </div>
-          <div>
-            <label className="text-sm block mb-1">Bunny Stream Library ID</label>
-            <input type="text" value={draft.bunnyLibraryId || ''} onChange={(e) => update('bunnyLibraryId', e.target.value)} className="field" placeholder="e.g. 12345" />
+
+          {/* ── Bunny Stream ── */}
+          <div className="border rule p-4 flex flex-col gap-4">
+            <h3 className="text-sm font-semibold">Bunny Stream</h3>
+            <div>
+              <label className="text-sm block mb-1">Library ID</label>
+              <input type="text" value={draft.bunnyLibraryId || ''} onChange={(e) => update('bunnyLibraryId', e.target.value)} className="field" placeholder="e.g. 12345" />
+            </div>
+            <div>
+              <label className="text-sm block mb-1">Video ID</label>
+              <input type="text" value={draft.bunnyVideoId || ''} onChange={(e) => update('bunnyVideoId', e.target.value)} className="field" placeholder="e.g. abc-123" />
+              <p className="text-xs text-muted mt-1">Or use <code>:::bunny-video {`{libraryId} {videoId}`}</code> in the content.</p>
+            </div>
+            <div>
+              <label className="text-sm block mb-1">Audio ID</label>
+              <input type="text" value={draft.bunnyAudioId || ''} onChange={(e) => update('bunnyAudioId', e.target.value)} className="field" placeholder="e.g. abc-456" />
+              <p className="text-xs text-muted mt-1">Or use <code>:::bunny-audio {`{libraryId} {audioId}`}</code> in the content.</p>
+            </div>
+            <div className="text-xs text-muted border-t rule pt-3 space-y-1">
+              <p className="font-semibold text-ink">Bunny Stream protection notes</p>
+              <p>Enable token authentication in your Bunny Stream library settings.</p>
+              <p>Set domain restrictions to your site's domain only.</p>
+            </div>
           </div>
-          <div>
-            <label className="text-sm block mb-1">Bunny Stream Video ID</label>
-            <input type="text" value={draft.bunnyVideoId || ''} onChange={(e) => update('bunnyVideoId', e.target.value)} className="field" placeholder="e.g. abc-123" />
-            <p className="text-xs text-muted mt-1">Add <code>:::bunny-video {`{libraryId} {videoId}`}</code> in the markdown content to embed.</p>
-          </div>
-          <div>
-            <label className="text-sm block mb-1">Bunny Stream Audio ID</label>
-            <input type="text" value={draft.bunnyAudioId || ''} onChange={(e) => update('bunnyAudioId', e.target.value)} className="field" placeholder="e.g. abc-456" />
-            <p className="text-xs text-muted mt-1">Add <code>:::bunny-audio {`{libraryId} {audioId}`}</code> in the markdown content to embed.</p>
-          </div>
-          <div className="border rule p-4 bg-panel text-sm">
-            <h3 className="font-semibold mb-2">Bunny Stream protection notes</h3>
-            <ul className="list-disc pl-5 space-y-1 text-muted">
-              <li>Enable token authentication in your Bunny Stream library settings.</li>
-              <li>Set domain restrictions to your site's domain only.</li>
-              <li>Use signed URLs with expiration for direct media links.</li>
-              <li>The iframe embeds here use Bunny's player, which handles token auth server-side.</li>
-            </ul>
-          </div>
+
         </div>
       )}
     </div>

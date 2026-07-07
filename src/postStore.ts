@@ -51,6 +51,21 @@ export function getBandcampTrackId(post: Post): string | undefined {
   return m ? m[1] : undefined;
 }
 
+export function getBandcampAlbumId(post: Post): string | undefined {
+  if (post.bandcampAlbumId) return post.bandcampAlbumId;
+  const m = post.content.match(/^:::bandcamp-album\s+(\S+)/m);
+  return m ? m[1] : undefined;
+}
+
+// Returns the first available Bandcamp embed: track takes priority over album.
+export function getBandcampEmbed(post: Post): { kind: 'track' | 'album'; id: string } | undefined {
+  const trackId = getBandcampTrackId(post);
+  if (trackId) return { kind: 'track', id: trackId };
+  const albumId = getBandcampAlbumId(post);
+  if (albumId) return { kind: 'album', id: albumId };
+  return undefined;
+}
+
 export function getBunnyVideo(post: Post): { libraryId: string; videoId: string } | undefined {
   if (post.bunnyLibraryId && post.bunnyVideoId) {
     return { libraryId: post.bunnyLibraryId, videoId: post.bunnyVideoId };
@@ -60,8 +75,8 @@ export function getBunnyVideo(post: Post): { libraryId: string; videoId: string 
 }
 
 export function hasBandcamp(post: Post): boolean {
-  if (post.bandcampTrackId) return true;
-  return /^:::bandcamp-track\s+\S+/m.test(post.content) ||
+  if (post.bandcampTrackId || post.bandcampAlbumId) return true;
+  return /^:::bandcamp-(track|album)\s+\S+/m.test(post.content) ||
     /^https?:\/\/[^.]+\.bandcamp\.com\/(track|album)\/[^\s/?#]+\/?$/m.test(post.content);
 }
 

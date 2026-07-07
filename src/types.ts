@@ -13,7 +13,8 @@ export interface Post {
   bunnyVideoId?: string; // for Bunny Stream video embeds
   bunnyAudioId?: string; // for Bunny Stream audio embeds
   bunnyLibraryId?: string; // Bunny library id for embeds
-  bandcampTrackId?: string; // Bandcamp numeric track ID for thumbnail player
+  bandcampTrackId?: string; // Bandcamp numeric track ID for embedded player
+  bandcampAlbumId?: string; // Bandcamp numeric album ID for embedded player
 }
 
 export interface AdminCredentials {
