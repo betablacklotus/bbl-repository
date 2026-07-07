@@ -1,0 +1,434 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    background-color: #f4f1ea;
+    color: #1a1a1a;
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+
+  a {
+    color: #1a4e8a;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  a:visited {
+    color: #6a3d8f;
+  }
+
+  a:hover {
+    color: #8a1a1a;
+  }
+
+  ::selection {
+    background: #1a1a1a;
+    color: #f4f1ea;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+@layer components {
+  .rule {
+    border-color: #c9c4b8;
+  }
+
+  /* Header icon/text buttons — 44px min touch target */
+  .header-btn {
+    color: #1a1a1a;
+    text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0 8px;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.1s linear, color 0.1s linear;
+  }
+
+  .header-btn:hover {
+    color: #1a1a1a;
+    border-bottom-color: #1a1a1a;
+  }
+
+  /* Desktop nav links */
+  .nav-link {
+    color: #1a1a1a;
+    text-decoration: none;
+    padding: 4px 0;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.1s linear;
+  }
+
+  .nav-link:hover {
+    color: #1a1a1a;
+    border-bottom-color: #1a1a1a;
+  }
+
+  .nav-link.active {
+    border-bottom-color: #1a1a1a;
+    font-weight: 600;
+  }
+
+  /* Mobile nav drawer links — full-width, 52px height */
+  .mobile-nav-link {
+    display: block;
+    width: 100%;
+    color: #1a1a1a;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid #c9c4b8;
+    transition: opacity 0.1s linear;
+  }
+
+  .mobile-nav-link:last-child {
+    border-bottom: none;
+  }
+
+  .mobile-nav-link:hover {
+    opacity: 0.65;
+    color: #1a1a1a;
+  }
+
+  .btn {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    padding: 10px 18px;
+    border: 1px solid #1a1a1a;
+    background: #f4f1ea;
+    color: #1a1a1a;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.4;
+    transition: background-color 0.1s linear, color 0.1s linear;
+    min-height: 44px;
+  }
+
+  .btn:hover {
+    background: #1a1a1a;
+    color: #f4f1ea;
+  }
+
+  .btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .btn-primary {
+    background: #1a1a1a;
+    color: #f4f1ea;
+  }
+
+  .btn-primary:hover {
+    background: #333;
+    color: #f4f1ea;
+  }
+
+  .field {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    padding: 10px 12px;
+    border: 1px solid #c9c4b8;
+    background: #fff;
+    color: #1a1a1a;
+    width: 100%;
+    border-radius: 0;
+    min-height: 44px;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .field:focus {
+    outline: 2px solid #1a1a1a;
+    outline-offset: -1px;
+    border-color: #1a1a1a;
+  }
+
+  .post-card {
+    border-bottom: 1px solid #c9c4b8;
+  }
+
+  .media-protect {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    pointer-events: auto;
+  }
+
+  .media-protect img {
+    -webkit-user-drag: none;
+    user-drag: none;
+    pointer-events: none;
+  }
+
+  /* iframes (video/audio players) inside media-protect must stay interactive */
+  .media-protect iframe {
+    pointer-events: auto;
+  }
+}
+
+/* ─── Markdown rendered content ─────────────────────────────────────────────── */
+
+.prose-mono h1 { font-size: clamp(1.4rem, 4vw, 1.75rem); margin: 1.5em 0 0.5em; font-weight: 600; }
+.prose-mono h2 { font-size: clamp(1.15rem, 3.5vw, 1.4rem); margin: 1.4em 0 0.5em; font-weight: 600; }
+.prose-mono h3 { font-size: clamp(1rem, 3vw, 1.15rem); margin: 1.2em 0 0.4em; font-weight: 600; }
+.prose-mono h4 { font-size: 1rem; margin: 1em 0 0.3em; font-weight: 600; }
+.prose-mono p { margin: 0.9em 0; }
+.prose-mono ul, .prose-mono ol { margin: 0.9em 0; padding-left: 1.5em; }
+.prose-mono li { margin: 0.35em 0; }
+.prose-mono blockquote {
+  border-left: 3px solid #1a1a1a;
+  padding-left: 1em;
+  margin: 1em 0;
+  color: #6b6657;
+  font-style: italic;
+}
+.prose-mono pre {
+  background: #1a1a1a;
+  color: #f4f1ea;
+  padding: 1em;
+  overflow-x: auto;
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 1em 0;
+  -webkit-overflow-scrolling: touch;
+}
+.prose-mono code {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.9em;
+}
+.prose-mono p code, .prose-mono li code {
+  background: #ebe6d8;
+  padding: 1px 4px;
+  word-break: break-word;
+}
+.prose-mono pre code {
+  background: transparent;
+  padding: 0;
+}
+.prose-mono img {
+  max-width: 100%;
+  height: auto;
+  margin: 1em 0;
+  border: 1px solid #c9c4b8;
+  display: block;
+}
+.prose-mono hr {
+  border: none;
+  border-top: 1px solid #c9c4b8;
+  margin: 2em 0;
+}
+.prose-mono a { color: #1a4e8a; }
+.prose-mono a:visited { color: #6a3d8f; }
+.prose-mono table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1em 0;
+  font-size: 13px;
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.prose-mono th, .prose-mono td {
+  border: 1px solid #c9c4b8;
+  padding: 8px 10px;
+  text-align: left;
+  white-space: nowrap;
+}
+.prose-mono th { background: #ebe6d8; font-weight: 600; }
+
+/* ─── Gallery ────────────────────────────────────────────────────────────────── */
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 6px;
+  margin: 1.5em 0;
+}
+.gallery img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  display: block;
+  border: 1px solid #c9c4b8;
+  transition: opacity 0.1s linear;
+  cursor: zoom-in;
+}
+.gallery img:hover {
+  opacity: 0.85;
+}
+@media (max-width: 480px) {
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px;
+  }
+  .gallery img {
+    height: 110px;
+  }
+}
+
+/* ─── Bunny video embed ──────────────────────────────────────────────────────── */
+
+.bunny-embed {
+  position: relative;
+  width: 100%;
+  margin: 1em 0;
+}
+
+.bunny-video-wrap {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
+  overflow: hidden;
+  border: 1px solid #c9c4b8;
+  background: #1a1a1a;
+}
+
+.bunny-video-wrap iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+/* ─── Bunny audio embed ──────────────────────────────────────────────────────── */
+
+.bunny-audio-wrap {
+  width: 100%;
+  border: 1px solid #c9c4b8;
+  background: #ebe6d8;
+  overflow: hidden;
+  margin: 1em 0;
+}
+
+.bunny-audio-wrap iframe {
+  width: 100%;
+  height: 80px;
+  border: 0;
+  display: block;
+}
+
+/* ─── Bandcamp embedded player ───────────────────────────────────────────────── */
+
+.bandcamp-embed {
+  width: 100%;
+  max-width: 400px;
+  margin: 1em 0;
+}
+
+.bandcamp-embed iframe {
+  width: 100%;
+  height: 350px;
+  border: 0;
+  display: block;
+}
+
+@media (max-width: 480px) {
+  .bandcamp-embed {
+    max-width: 100%;
+  }
+  .bandcamp-embed iframe {
+    height: 300px;
+  }
+}
+
+/* ─── Bandcamp link card ─────────────────────────────────────────────────────── */
+
+.bandcamp-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  margin: 1em 0;
+  border: 1px solid #c9c4b8;
+  background: #ebe6d8;
+  color: #1a1a1a;
+  text-decoration: none;
+  font-family: 'IBM Plex Mono', monospace;
+  transition: background-color 0.1s linear, border-color 0.1s linear;
+  min-height: 56px;
+}
+.bandcamp-card:hover {
+  background: #1a1a1a;
+  border-color: #1a1a1a;
+  color: #f4f1ea;
+  text-decoration: none;
+}
+.bandcamp-card:visited {
+  color: #1a1a1a;
+}
+.bandcamp-card:hover:visited {
+  color: #f4f1ea;
+}
+.bandcamp-card-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  color: #1da0c3;
+  transition: color 0.1s linear;
+}
+.bandcamp-card:hover .bandcamp-card-icon {
+  color: #5dd0ea;
+}
+.bandcamp-card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.bandcamp-card-title {
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.bandcamp-card-meta {
+  font-size: 11px;
+  opacity: 0.65;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.bandcamp-card-cta {
+  flex-shrink: 0;
+  font-size: 12px;
+  opacity: 0.7;
+  white-space: nowrap;
+}
