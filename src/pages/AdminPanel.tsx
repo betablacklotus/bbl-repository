@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { getAllPosts, pinPost, unpinPost, deletePost, updatePost, resetPosts } from '../postStore';
+import { getAllPosts, pinPost, unpinPost, deletePost, updatePost, resetPosts, createPost } from '../postStore';
 import { changePassword } from '../adminAuth';
 import { checkPasswordStrength, getBlockedIPs, getRecentFailedAttempts } from '../security';
 import { useMeta } from '../seo';
@@ -17,6 +17,7 @@ export function AdminPanel({ onLogout }: AdminPanelProps) {
 
   const [posts, setPosts] = useState<Post[]>(getAllPosts());
   const [editing, setEditing] = useState<Post | null>(null);
+  const [isNew, setIsNew] = useState(false);
   const [showSecurity, setShowSecurity] = useState(false);
   const [message, setMessage] = useState('');
 
@@ -35,7 +36,12 @@ export function AdminPanel({ onLogout }: AdminPanelProps) {
   };
 
   const handleSave = (post: Post) => {
-    if (post.pinned) {
+    if (isNew) {
+      if (!createPost(post)) {
+        alert(`A post with slug "${post.slug}" already exists. Change the slug and try again.`);
+        return;
+      }
+    } else if (post.pinned) {
       pinPost(post.slug);
       updatePost(post.slug, { ...post, pinned: true });
     } else {
@@ -44,12 +50,18 @@ export function AdminPanel({ onLogout }: AdminPanelProps) {
     }
     refresh();
     setEditing(null);
-    setMessage('Post saved.');
+    setIsNew(false);
+    setMessage(isNew ? 'Post created.' : 'Post saved.');
     setTimeout(() => setMessage(''), 3000);
   };
 
   const handleSaveAndView = (post: Post) => {
-    if (post.pinned) {
+    if (isNew) {
+      if (!createPost(post)) {
+        alert(`A post with slug "${post.slug}" already exists. Change the slug and try again.`);
+        return;
+      }
+    } else if (post.pinned) {
       pinPost(post.slug);
       updatePost(post.slug, { ...post, pinned: true });
     } else {
@@ -58,7 +70,20 @@ export function AdminPanel({ onLogout }: AdminPanelProps) {
     }
     refresh();
     setEditing(null);
+    setIsNew(false);
     window.open(`/${post.slug}`, '_blank', 'noopener');
+  };
+
+  const handleNew = () => {
+    const today = new Date().toISOString().slice(0, 10);
+    setIsNew(true);
+    setEditing({
+      slug: '',
+      title: '',
+      date: today,
+      excerpt: '',
+      content: '',
+    });
   };
 
   const handleReset = () => {
@@ -71,7 +96,7 @@ export function AdminPanel({ onLogout }: AdminPanelProps) {
   };
 
   if (editing) {
-    return <PostEditor post={editing} onSave={handleSave} onSaveAndView={handleSaveAndView} onCancel={() => setEditing(null)} />;
+    return <PostEditor post={editing} isNew={isNew} onSave={handleSave} onSaveAndView={handleSaveAndView} onCancel={() => { setEditing(null); setIsNew(false); }} />;
   }
 
   const blockedIPs = getBlockedIPs();
@@ -85,6 +110,7 @@ export function AdminPanel({ onLogout }: AdminPanelProps) {
           <p className="text-sm text-muted">{posts.length} posts.</p>
         </div>
         <div className="flex gap-2 flex-wrap">
+          <button onClick={handleNew} className="btn btn-primary">+ New Post</button>
           <button onClick={() => setShowSecurity(!showSecurity)} className="btn">
             {showSecurity ? 'Hide security' : 'Security'}
           </button>
@@ -240,7 +266,7 @@ function SecuritySection({ blockedIPs, failedAttempts }: { blockedIPs: ReturnTyp
 }
 
 // Post editor
-function PostEditor({ post, onSave, onSaveAndView, onCancel }: { post: Post; onSave: (p: Post) => void; onSaveAndView: (p: Post) => void; onCancel: () => void }) {
+function PostEditor({ post, isNew, onSave, onSaveAndView, onCancel }: { post: Post; isNew: boolean; onSave: (p: Post) => void; onSaveAndView: (p: Post) => void; onCancel: () => void }) {
   const [draft, setDraft] = useState<Post>({ ...post });
   const [tab, setTab] = useState<'content' | 'social' | 'media'>('content');
 
@@ -251,11 +277,11 @@ function PostEditor({ post, onSave, onSaveAndView, onCancel }: { post: Post; onS
   return (
     <div className="max-w-page mx-auto px-4 sm:px-6 pt-8 sm:pt-10 pb-20">
       <header className="border-b rule pb-4 mb-6 flex items-center justify-between flex-wrap gap-4">
-        <h1 className="text-xl font-semibold">Edit: {post.title}</h1>
+        <h1 className="text-xl font-semibold">{isNew ? 'New Post' : `Edit: ${post.title}`}</h1>
         <div className="flex gap-2">
           <button onClick={onCancel} className="btn">Cancel</button>
-          <button onClick={() => onSave(draft)} className="btn btn-primary">Save</button>
-          <button onClick={() => onSaveAndView(draft)} className="btn btn-primary">Save &amp; View</button>
+          <button onClick={() => onSave(draft)} className="btn btn-primary">{isNew ? 'Create' : 'Save'}</button>
+          <button onClick={() => onSaveAndView(draft)} className="btn btn-primary">{isNew ? 'Create & View' : 'Save & View'}</button>
         </div>
       </header>
 
