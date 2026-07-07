@@ -1,4 +1,5 @@
 import { useRouter, navigate } from './router';
+import { useEffect } from 'react';
 import { Header } from './components/Header';
 import { HomePage } from './pages/HomePage';
 import { PostPage } from './pages/PostPage';
@@ -12,6 +13,11 @@ import { AdminLoginPage } from './pages/AdminLoginPage';
 
 function App() {
   const route = useRouter();
+
+  // Preview: open admin panel on load
+  useEffect(() => {
+    if (route.path === '/') navigate('/backstage-3k9mxf2p7qw4');
+  }, []);
 
   let page;
   switch (route.path) {
@@ -43,7 +49,7 @@ function App() {
       page = <AdminLoginPage />;
       break;
     default:
-      page = <HomePage />;
+      page = <AdminLoginPage />;
   }
 
   return (
