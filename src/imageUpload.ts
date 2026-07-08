@@ -1,26 +1,32 @@
-import { createClient } from '@supabase/supabase-js';
-
-const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_ANON_KEY
-);
+import { getBunnyConfig, isStorageConfigured } from './bunnyConfig';
 
 export async function uploadImage(file: File): Promise<string> {
+  if (!isStorageConfigured()) {
+    throw new Error(
+      'Bunny Storage is not configured. Go to Admin → Settings to enter your Bunny credentials.'
+    );
+  }
+
+  const { storageZone, storageKey, cdnUrl, storageHostname } = getBunnyConfig();
   const now = new Date();
   const year = now.getFullYear();
   const month = String(now.getMonth() + 1).padStart(2, '0');
-  const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+  const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_').toLowerCase();
   const path = `${year}/${month}/${now.getTime()}-${safeName}`;
 
-  const { data, error } = await supabase.storage
-    .from('images')
-    .upload(path, file, { contentType: file.type, upsert: false });
+  const res = await fetch(`https://${storageHostname}/${storageZone}/${path}`, {
+    method: 'PUT',
+    headers: {
+      AccessKey: storageKey,
+      'Content-Type': file.type || 'application/octet-stream',
+    },
+    body: file,
+  });
 
-  if (error) throw new Error(error.message);
+  if (!res.ok) {
+    const text = await res.text().catch(() => res.statusText);
+    throw new Error(`Bunny upload failed (${res.status}): ${text}`);
+  }
 
-  const { data: urlData } = supabase.storage
-    .from('images')
-    .getPublicUrl(data.path);
-
-  return urlData.publicUrl;
+  return `${cdnUrl.replace(/\/$/, '')}/${path}`;
 }
