@@ -26,6 +26,8 @@ export interface Page {
   socialTitle?: string;
   socialDescription?: string;
   socialImage?: string;
+  showInHeader?: boolean;
+  showInFooter?: boolean;
 }
 
 export interface AdminCredentials {

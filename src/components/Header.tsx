@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Search, Menu, X } from 'lucide-react';
 import { navigate, useRouter } from '../router';
 import { searchPosts } from '../postStore';
+import { getAllPages } from '../pageStore';
 import type { Post } from '../types';
 
 const NAV_LINKS = [
@@ -60,6 +61,10 @@ export function Header() {
     return route.path === path;
   };
 
+  const pageNavLinks = getAllPages()
+    .filter((p) => p.showInHeader)
+    .map((p) => ({ label: p.title, path: `/page/${p.slug}` }));
+
   const handleSearch = (q: string) => {
     setQuery(q);
     setResults(searchPosts(q).slice(0, 8));
@@ -96,6 +101,16 @@ export function Header() {
                 key={link.path}
                 href={link.path}
                 className={`nav-link text-sm ${isActive(link.path) ? 'active' : ''}`}
+                onClick={(e) => { e.preventDefault(); navigate(link.path); }}
+              >
+                {link.label}
+              </a>
+            ))}
+            {pageNavLinks.map((link) => (
+              <a
+                key={link.path}
+                href={link.path}
+                className={`nav-link text-sm ${route.path === '/page' && window.location.pathname === link.path ? 'active' : ''}`}
                 onClick={(e) => { e.preventDefault(); navigate(link.path); }}
               >
                 {link.label}
@@ -190,6 +205,16 @@ export function Header() {
                   key={link.path}
                   href={link.path}
                   className={`mobile-nav-link ${isActive(link.path) ? 'font-semibold' : ''}`}
+                  onClick={(e) => { e.preventDefault(); navigate(link.path); setMenuOpen(false); }}
+                >
+                  {link.label}
+                </a>
+              ))}
+              {pageNavLinks.map((link) => (
+                <a
+                  key={link.path}
+                  href={link.path}
+                  className="mobile-nav-link"
                   onClick={(e) => { e.preventDefault(); navigate(link.path); setMenuOpen(false); }}
                 >
                   {link.label}

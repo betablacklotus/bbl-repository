@@ -828,7 +828,7 @@ function PageEditor({
   const [draft, setDraft] = useState<Page>({ ...page });
   const [tab, setTab] = useState<'content' | 'social'>('content');
 
-  const update = (field: keyof Page, value: string) =>
+  const update = (field: keyof Page, value: unknown) =>
     setDraft((prev) => ({ ...prev, [field]: value }));
 
   return (
@@ -906,6 +906,24 @@ function PageEditor({
               className="field"
               rows={2}
             />
+          </div>
+          <div className="flex flex-col gap-2">
+            <label className="flex items-center gap-2 text-sm cursor-pointer select-none">
+              <input
+                type="checkbox"
+                checked={!!draft.showInHeader}
+                onChange={(e) => update('showInHeader', e.target.checked)}
+              />
+              Show link in site header
+            </label>
+            <label className="flex items-center gap-2 text-sm cursor-pointer select-none">
+              <input
+                type="checkbox"
+                checked={!!draft.showInFooter}
+                onChange={(e) => update('showInFooter', e.target.checked)}
+              />
+              Show link in site footer
+            </label>
           </div>
           <div>
             <label className="text-sm block mb-1">Content (Markdown)</label>
