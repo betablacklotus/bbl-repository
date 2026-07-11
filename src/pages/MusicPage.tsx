@@ -40,12 +40,7 @@ export function MusicPage() {
   return (
     <div className="max-w-prose mx-auto px-4 sm:px-6">
       <div className="pt-10 pb-6 border-b rule">
-        <h1 className="text-2xl sm:text-3xl font-semibold mb-2">Music</h1>
-        <p className="text-sm sm:text-base text-muted">
-          {allPosts.length === 0
-            ? 'No music posts yet.'
-            : `Posts featuring Bandcamp embeds — ${allPosts.length} total.`}
-        </p>
+        <h1 className="text-2xl sm:text-3xl font-semibold">Music</h1>
       </div>
 
       {allPosts.length === 0 ? (
