@@ -29,6 +29,8 @@ function parsePath(): Route {
     return { path: '/backstage-3k9mxf2p7qw4', params: {} };
   if (parts.length === 2 && parts[0] === 'tag')
     return { path: '/tag', params: { tag: parts[1] } };
+  if (parts.length === 2 && parts[0] === 'page')
+    return { path: '/page', params: { slug: parts[1] } };
   if (parts.length === 1)
     return { path: '/post', params: { slug: parts[0] } };
 

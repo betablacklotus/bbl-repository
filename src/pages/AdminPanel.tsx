@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { BookOpen, Image as ImageIcon, Settings, Upload, Copy, Check, FilePlus, FileDown } from 'lucide-react';
+import { BookOpen, Image as ImageIcon, Settings, Upload, Copy, Check, FilePlus, FileDown, FileText } from 'lucide-react';
 import { getAllPosts, pinPost, unpinPost, deletePost, updatePost, resetPosts, createPost, getPost, formatDate } from '../postStore';
+import { getAllPages, createPage, updatePage, deletePage } from '../pageStore';
 import { changePassword } from '../adminAuth';
 import { checkPasswordStrength, getBlockedIPs, getRecentFailedAttempts } from '../security';
 import { useMeta } from '../seo';
@@ -10,7 +11,7 @@ import { MarkdownEditor } from '../components/MarkdownEditor';
 import { getBunnyConfig, setBunnyConfig, isStorageConfigured, BunnyConfig } from '../bunnyConfig';
 import { uploadImage } from '../imageUpload';
 import { downloadPostAsMarkdown, markdownToPost } from '../markdownExport';
-import type { Post } from '../types';
+import type { Post, Page } from '../types';
 
 interface AdminPanelProps {
   onLogout: () => void;
@@ -31,7 +32,7 @@ export function AdminPanel({ onLogout }: AdminPanelProps) {
     return null;
   });
   const [isNew, setIsNew] = useState(false);
-  const [tab, setTab] = useState<'posts' | 'media' | 'settings'>('posts');
+  const [tab, setTab] = useState<'posts' | 'pages' | 'media' | 'settings'>('posts');
   const [message, setMessage] = useState('');
 
   const refresh = () => setPosts(getAllPosts());
@@ -160,6 +161,7 @@ export function AdminPanel({ onLogout }: AdminPanelProps) {
       <div className="flex border-b rule mb-8">
         {([
           ['posts',    BookOpen,   'Posts'],
+          ['pages',    FileText,   'Pages'],
           ['media',    ImageIcon,  'Media'],
           ['settings', Settings,   'Settings'],
         ] as const).map(([id, Icon, label]) => (
@@ -273,9 +275,11 @@ export function AdminPanel({ onLogout }: AdminPanelProps) {
         </div>
       )}
 
+      {/* ── Pages tab ── */}
+      {tab === 'pages' && <PagesTab />}
+
       {/* ── Media tab ── */}
       {tab === 'media' && <MediaUploader />}
-
       {/* ── Settings tab ── */}
       {tab === 'settings' && (
         <SettingsTab
@@ -668,6 +672,286 @@ function SecuritySection({
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+// ─── Pages Tab ───────────────────────────────────────────────────────────────
+
+function PagesTab() {
+  const [pages, setPages] = useState<Page[]>(getAllPages());
+  const [editing, setEditing] = useState<Page | null>(null);
+  const [isNew, setIsNew] = useState(false);
+  const [message, setMessage] = useState('');
+
+  const refresh = () => setPages(getAllPages());
+  const flash = (msg: string) => { setMessage(msg); setTimeout(() => setMessage(''), 3500); };
+
+  const handleNew = () => {
+    setIsNew(true);
+    setEditing({ slug: '', title: '', content: '' });
+  };
+
+  const handleSave = (page: Page) => {
+    if (isNew) {
+      if (!createPage(page)) {
+        alert(`A page with slug "${page.slug}" already exists. Change the slug and try again.`);
+        return;
+      }
+    } else {
+      updatePage(page.slug, page);
+    }
+    refresh();
+    setEditing(null);
+    setIsNew(false);
+    flash(isNew ? 'Page created.' : 'Page saved.');
+  };
+
+  const handleSaveAndView = (page: Page) => {
+    if (isNew) {
+      if (!createPage(page)) {
+        alert(`A page with slug "${page.slug}" already exists. Change the slug and try again.`);
+        return;
+      }
+    } else {
+      updatePage(page.slug, page);
+    }
+    refresh();
+    setEditing(null);
+    setIsNew(false);
+    window.open(`/page/${page.slug}`, '_blank', 'noopener');
+  };
+
+  const handleDelete = (slug: string) => {
+    if (confirm('Delete this page? This cannot be undone.')) {
+      deletePage(slug);
+      refresh();
+    }
+  };
+
+  if (editing) {
+    return (
+      <PageEditor
+        page={editing}
+        isNew={isNew}
+        onSave={handleSave}
+        onSaveAndView={handleSaveAndView}
+        onCancel={() => { setEditing(null); setIsNew(false); }}
+      />
+    );
+  }
+
+  return (
+    <div>
+      {message && (
+        <div className="border p-3 mb-5 text-sm" style={{ borderColor: '#5a9e5a', background: '#eef5ee' }}>
+          {message}
+        </div>
+      )}
+
+      <div className="flex items-center gap-2 mb-5 flex-wrap">
+        <button onClick={handleNew} className="btn btn-primary flex items-center gap-1.5">
+          <FilePlus size={14} />
+          New Page
+        </button>
+      </div>
+
+      {pages.length === 0 ? (
+        <p className="text-sm text-muted">No pages yet. Create one to get started.</p>
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm" style={{ minWidth: 480 }}>
+            <thead>
+              <tr className="border-b rule">
+                <th className="text-left py-2 px-2 font-semibold">Title</th>
+                <th className="text-left py-2 px-2 font-semibold hidden sm:table-cell">URL</th>
+                <th className="text-left py-2 px-2 font-semibold">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {pages.map((page) => (
+                <tr key={page.slug} className="border-b rule">
+                  <td className="py-2.5 px-2">{page.title}</td>
+                  <td className="py-2.5 px-2 text-muted hidden sm:table-cell">
+                    <code className="text-xs">/page/{page.slug}</code>
+                  </td>
+                  <td className="py-2.5 px-2">
+                    <div className="flex gap-1 flex-wrap items-center">
+                      <button
+                        onClick={() => setEditing({ ...page })}
+                        className="btn"
+                        style={{ padding: '3px 9px', fontSize: 12 }}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => window.open(`/page/${page.slug}`, '_blank', 'noopener')}
+                        className="btn"
+                        style={{ padding: '3px 9px', fontSize: 12 }}
+                      >
+                        View
+                      </button>
+                      <button
+                        onClick={() => handleDelete(page.slug)}
+                        className="btn"
+                        style={{ padding: '3px 9px', fontSize: 12 }}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── Page Editor ──────────────────────────────────────────────────────────────
+
+function PageEditor({
+  page,
+  isNew,
+  onSave,
+  onSaveAndView,
+  onCancel,
+}: {
+  page: Page;
+  isNew: boolean;
+  onSave: (p: Page) => void;
+  onSaveAndView: (p: Page) => void;
+  onCancel: () => void;
+}) {
+  const [draft, setDraft] = useState<Page>({ ...page });
+  const [tab, setTab] = useState<'content' | 'social'>('content');
+
+  const update = (field: keyof Page, value: string) =>
+    setDraft((prev) => ({ ...prev, [field]: value }));
+
+  return (
+    <div className="max-w-page mx-auto px-4 sm:px-6 pt-8 sm:pt-10 pb-20">
+      <header className="border-b rule pb-4 mb-6 flex items-center justify-between flex-wrap gap-4">
+        <h1 className="text-xl font-semibold">{isNew ? 'New Page' : `Edit: ${page.title}`}</h1>
+        <div className="flex gap-2 flex-wrap">
+          <button onClick={onCancel} className="btn">Cancel</button>
+          <button onClick={() => onSave(draft)} className="btn btn-primary">
+            {isNew ? 'Create' : 'Save'}
+          </button>
+          <button onClick={() => onSaveAndView(draft)} className="btn btn-primary">
+            {isNew ? 'Create & View' : 'Save & View'}
+          </button>
+        </div>
+      </header>
+
+      <div className="flex border-b rule mb-6">
+        {(['content', 'social'] as const).map((t) => (
+          <button
+            key={t}
+            onClick={() => setTab(t)}
+            className={`px-4 py-2.5 text-sm capitalize select-none ${tab === t ? 'font-semibold' : 'text-muted'}`}
+            style={{
+              borderBottom: tab === t ? '2px solid #1a1a1a' : '2px solid transparent',
+              marginBottom: -1,
+            }}
+          >
+            {t}
+          </button>
+        ))}
+      </div>
+
+      {tab === 'content' && (
+        <div className="flex flex-col gap-4">
+          <div>
+            <label className="text-sm block mb-1">Title</label>
+            <input
+              type="text"
+              value={draft.title}
+              onChange={(e) => update('title', e.target.value)}
+              className="field"
+            />
+          </div>
+          <div className="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label className="text-sm block mb-1">Slug</label>
+              <input
+                type="text"
+                value={draft.slug}
+                onChange={(e) => update('slug', e.target.value)}
+                className="field"
+                disabled={!isNew}
+              />
+              {!isNew && (
+                <p className="text-xs text-muted mt-1">Slug cannot be changed after creation.</p>
+              )}
+            </div>
+            <div>
+              <label className="text-sm block mb-1">Featured image URL</label>
+              <input
+                type="url"
+                value={draft.featuredImage ?? ''}
+                onChange={(e) => update('featuredImage', e.target.value)}
+                className="field"
+                placeholder="https://…"
+              />
+            </div>
+          </div>
+          <div>
+            <label className="text-sm block mb-1">Excerpt (used for SEO description)</label>
+            <textarea
+              value={draft.excerpt ?? ''}
+              onChange={(e) => update('excerpt', e.target.value)}
+              className="field"
+              rows={2}
+            />
+          </div>
+          <div>
+            <label className="text-sm block mb-1">Content (Markdown)</label>
+            <MarkdownEditor value={draft.content} onChange={(v) => update('content', v)} rows={20} />
+          </div>
+        </div>
+      )}
+
+      {tab === 'social' && (
+        <div className="flex flex-col gap-4 max-w-prose">
+          <p className="text-sm text-muted">
+            Controls how the page appears when shared on social media. Defaults to title and excerpt if left blank.
+          </p>
+          <div>
+            <label className="text-sm block mb-1">Social title</label>
+            <input
+              type="text"
+              value={draft.socialTitle ?? ''}
+              onChange={(e) => update('socialTitle', e.target.value)}
+              className="field"
+              placeholder={draft.title}
+            />
+          </div>
+          <div>
+            <label className="text-sm block mb-1">Social description</label>
+            <textarea
+              value={draft.socialDescription ?? ''}
+              onChange={(e) => update('socialDescription', e.target.value)}
+              className="field"
+              rows={3}
+              placeholder={draft.excerpt ?? ''}
+            />
+          </div>
+          <div>
+            <label className="text-sm block mb-1">Social image URL</label>
+            <input
+              type="url"
+              value={draft.socialImage ?? ''}
+              onChange={(e) => update('socialImage', e.target.value)}
+              className="field"
+              placeholder={draft.featuredImage ?? 'https://…'}
+            />
+            <p className="text-xs text-muted mt-1">Recommended: 1200×630px for Open Graph / Twitter Card.</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

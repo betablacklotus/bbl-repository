@@ -17,6 +17,17 @@ export interface Post {
   bandcampAlbumId?: string; // Bandcamp numeric album ID for embedded player
 }
 
+export interface Page {
+  slug: string;
+  title: string;
+  content: string;
+  excerpt?: string;
+  featuredImage?: string;
+  socialTitle?: string;
+  socialDescription?: string;
+  socialImage?: string;
+}
+
 export interface AdminCredentials {
   passwordHash: string;
   salt: string;

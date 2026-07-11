@@ -10,6 +10,7 @@ import { ArchivePage } from './pages/ArchivePage';
 import { ContactPage } from './pages/ContactPage';
 import { TagPage } from './pages/TagPage';
 import { AdminLoginPage } from './pages/AdminLoginPage';
+import { StandalonePage } from './pages/StandalonePage';
 
 function App() {
   const route = useRouter();
@@ -44,6 +45,9 @@ function App() {
       break;
     case '/tag':
       page = <TagPage tag={route.params.tag} />;
+      break;
+    case '/page':
+      page = <StandalonePage slug={route.params.slug} />;
       break;
     case '/backstage-3k9mxf2p7qw4':
       page = <AdminLoginPage />;
