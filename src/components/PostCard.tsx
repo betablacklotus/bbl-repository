@@ -63,15 +63,20 @@ export function PostCard({ post, showPinBadge = true }: PostCardProps) {
           />
         </div>
       ) : post.featuredImage ? (
-        <MediaProtect className="mb-4 cursor-pointer">
-          <img
-            src={post.featuredImage}
-            alt={post.title}
-            loading="lazy"
-            onClick={go}
-            className="w-full h-auto border rule cursor-pointer"
-            style={{ maxHeight: 360, objectFit: 'cover' }}
-          />
+        <MediaProtect className="mb-4">
+          <a
+            href={`/${post.slug}`}
+            onClick={(e) => { e.preventDefault(); go(); }}
+            style={{ display: 'block', cursor: 'pointer' }}
+          >
+            <img
+              src={post.featuredImage}
+              alt={post.title}
+              loading="lazy"
+              className="w-full h-auto border rule"
+              style={{ maxHeight: 360, objectFit: 'cover', display: 'block' }}
+            />
+          </a>
         </MediaProtect>
       ) : null}
 
