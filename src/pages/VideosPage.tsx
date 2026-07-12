@@ -10,12 +10,7 @@ export function VideosPage() {
   return (
     <div className="max-w-prose mx-auto px-4 sm:px-6 pt-8 sm:pt-10 pb-20">
       <header className="border-b rule pb-6 mb-8">
-        <h1 className="text-2xl sm:text-3xl font-semibold mb-2">Videos</h1>
-        <p className="text-sm text-muted">
-          {posts.length === 0
-            ? 'No video posts yet.'
-            : `${posts.length} post${posts.length === 1 ? '' : 's'} containing video.`}
-        </p>
+        <h1 className="text-2xl sm:text-3xl font-semibold">Videos</h1>
       </header>
 
       {posts.length === 0 ? (
