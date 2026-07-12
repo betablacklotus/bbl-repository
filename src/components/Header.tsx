@@ -61,9 +61,7 @@ export function Header() {
     return route.path === path;
   };
 
-  const pageNavLinks = getAllPages()
-    .filter((p) => p.showInHeader)
-    .map((p) => ({ label: p.title, path: `/page/${p.slug}` }));
+  const pageNavLinks = getAllPages().filter((p) => p.showInHeader);
 
   const handleSearch = (q: string) => {
     setQuery(q);
@@ -106,14 +104,14 @@ export function Header() {
                 {link.label}
               </a>
             ))}
-            {pageNavLinks.map((link) => (
+            {pageNavLinks.map((page) => (
               <a
-                key={link.path}
-                href={link.path}
-                className={`nav-link text-sm ${route.path === '/page' && window.location.pathname === link.path ? 'active' : ''}`}
-                onClick={(e) => { e.preventDefault(); navigate(link.path); }}
+                key={page.slug}
+                href={`/page/${page.slug}`}
+                className={`nav-link text-sm ${route.path === '/page' && window.location.pathname === `/page/${page.slug}` ? 'active' : ''}`}
+                onClick={(e) => { e.preventDefault(); navigate(`/page/${page.slug}`); }}
               >
-                {link.label}
+                {page.title}
               </a>
             ))}
             <a href="/feed.xml" className="nav-link text-sm">RSS</a>
@@ -210,14 +208,14 @@ export function Header() {
                   {link.label}
                 </a>
               ))}
-              {pageNavLinks.map((link) => (
+              {pageNavLinks.map((page) => (
                 <a
-                  key={link.path}
-                  href={link.path}
+                  key={page.slug}
+                  href={`/page/${page.slug}`}
                   className="mobile-nav-link"
-                  onClick={(e) => { e.preventDefault(); navigate(link.path); setMenuOpen(false); }}
+                  onClick={(e) => { e.preventDefault(); navigate(`/page/${page.slug}`); setMenuOpen(false); }}
                 >
-                  {link.label}
+                  {page.title}
                 </a>
               ))}
               <a
