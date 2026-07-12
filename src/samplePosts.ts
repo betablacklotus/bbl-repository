@@ -210,6 +210,42 @@ All seventeen frames were shot on the same morning with the same lens. No filter
   },
 
   {
+    slug: 'seventeen-frames-gallery',
+    title: 'Seventeen Frames Gallery',
+    date: '2026-07-05',
+    excerpt:
+      'All seventeen frames from the coast in one place — wet sand, fog, fishing boats, and the particular grey of a sky that cannot make up its mind.',
+    tags: ['photo', 'travel', 'coast'],
+    featuredImage: 'https://images.pexels.com/photos/1533720/pexels-photo-1533720.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    socialTitle: 'Seventeen Frames Gallery',
+    socialDescription: 'All seventeen frames from a morning on the coast.',
+    socialImage: 'https://images.pexels.com/photos/1533720/pexels-photo-1533720.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    content: `# Seventeen Frames Gallery
+
+All seventeen frames from a morning on the coast. Low tide, early light, nobody else around.
+
+---
+
+![Wet sand at low tide, early morning](https://images.pexels.com/photos/1533720/pexels-photo-1533720.jpeg?auto=compress&cs=tinysrgb&w=900)
+![Fishing boats moored in harbour](https://images.pexels.com/photos/163236/pexels-photo-163236.jpeg?auto=compress&cs=tinysrgb&w=900)
+![Coiled rope on a wooden dock](https://images.pexels.com/photos/1001682/pexels-photo-1001682.jpeg?auto=compress&cs=tinysrgb&w=900)
+![Peeling blue paint on a boat hull](https://images.pexels.com/photos/273886/pexels-photo-273886.jpeg?auto=compress&cs=tinysrgb&w=900)
+![Fog sitting low over the water](https://images.pexels.com/photos/1547813/pexels-photo-1547813.jpeg?auto=compress&cs=tinysrgb&w=900)
+![Seabirds on a groyne at low water](https://images.pexels.com/photos/1266810/pexels-photo-1266810.jpeg?auto=compress&cs=tinysrgb&w=900)
+![Weathered wooden bollard](https://images.pexels.com/photos/2249959/pexels-photo-2249959.jpeg?auto=compress&cs=tinysrgb&w=900)
+![Breakwater extending into a grey sea](https://images.pexels.com/photos/1533720/pexels-photo-1533720.jpeg?auto=compress&cs=tinysrgb&w=900&h=600&fit=crop)
+![Rock pools exposed at low tide](https://images.pexels.com/photos/2480078/pexels-photo-2480078.jpeg?auto=compress&cs=tinysrgb&w=900)
+![Kelp draped over dark rocks](https://images.pexels.com/photos/1450363/pexels-photo-1450363.jpeg?auto=compress&cs=tinysrgb&w=900&h=600&fit=crop)
+![Old stone sea wall, close texture](https://images.pexels.com/photos/1118873/pexels-photo-1118873.jpeg?auto=compress&cs=tinysrgb&w=900)
+![Iron ladder descending to the water](https://images.pexels.com/photos/1670977/pexels-photo-1670977.jpeg?auto=compress&cs=tinysrgb&w=900)
+![Horizon line with a distant vessel](https://images.pexels.com/photos/1295138/pexels-photo-1295138.jpeg?auto=compress&cs=tinysrgb&w=900)
+![Pebble beach, long exposure blur](https://images.pexels.com/photos/994605/pexels-photo-994605.jpeg?auto=compress&cs=tinysrgb&w=900)
+![Wooden beach hut, faded yellow](https://images.pexels.com/photos/1032650/pexels-photo-1032650.jpeg?auto=compress&cs=tinysrgb&w=900)
+![Footprints in wet sand leading away](https://images.pexels.com/photos/1005014/pexels-photo-1005014.jpeg?auto=compress&cs=tinysrgb&w=900)
+![The sea, simply](https://images.pexels.com/photos/1295138/pexels-photo-1295138.jpeg?auto=compress&cs=tinysrgb&w=900&h=500&fit=crop)`,
+  },
+
+  {
     slug: 'on-using-old-tools',
     title: 'On Using Old Tools',
     date: '2026-05-02',
