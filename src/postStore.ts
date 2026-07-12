@@ -20,8 +20,15 @@ function loadPosts(): Post[] {
     if (stored) {
       const parsed = JSON.parse(stored) as Post[];
       if (Array.isArray(parsed) && parsed.length > 0) {
-        const migrated = migratePosts(parsed);
-        if (JSON.stringify(migrated) !== stored) {
+        let migrated = migratePosts(parsed);
+        // Merge in any sample posts that are missing from the stored list
+        // (handles cases where new posts are added to samplePosts.ts after first load)
+        const storedSlugs = new Set(migrated.map((p) => p.slug));
+        const newSamples = SAMPLE_POSTS.filter((p) => !storedSlugs.has(p.slug));
+        if (newSamples.length > 0) {
+          migrated = [...migrated, ...newSamples];
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(migrated));
+        } else if (JSON.stringify(migrated) !== stored) {
           localStorage.setItem(STORAGE_KEY, JSON.stringify(migrated));
         }
         return migrated;
