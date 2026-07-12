@@ -68,7 +68,7 @@ export function MusicPage() {
                 </p>
               </>
             ) : (
-              <p className="text-xs text-muted">— End of feed —</p>
+              null
             )}
           </div>
         </>
