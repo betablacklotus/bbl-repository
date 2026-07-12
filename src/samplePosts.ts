@@ -99,10 +99,10 @@ That is the project, I suppose. Keeping on nodding terms with the people I used 
     excerpt:
       'A short field recording from the creek behind the old mill, with notes on the equipment used and the sound of low water over smooth stones.',
     tags: ['audio', 'field-recording', 'bunny'],
-    featuredImage: 'https://images.pexels.com/photos/2406467/pexels-photo-2406467.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    featuredImage: 'https://images.pexels.com/photos/1005014/pexels-photo-1005014.jpeg?auto=compress&cs=tinysrgb&w=1200',
     socialTitle: 'Field Recording: The Creek in July',
     socialDescription: 'A Bunny Stream audio recording of a creek in summer.',
-    socialImage: 'https://images.pexels.com/photos/2406467/pexels-photo-2406467.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    socialImage: 'https://images.pexels.com/photos/1005014/pexels-photo-1005014.jpeg?auto=compress&cs=tinysrgb&w=1200',
     bunnyAudioId: 'example-audio-001',
     bunnyLibraryId: 'example-library',
     content: `# Field Recording: The Creek in July
