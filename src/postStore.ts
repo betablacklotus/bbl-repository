@@ -4,12 +4,28 @@ import { excerptFromMarkdown } from './markdown';
 
 const STORAGE_KEY = 'terminal_blog_posts_v1';
 
+// Repairs known broken image URLs that may be persisted in localStorage.
+function migratePosts(posts: Post[]): Post[] {
+  const BROKEN = 'pexels-photo-2406467';
+  const FIXED = 'https://images.pexels.com/photos/1005014/pexels-photo-1005014.jpeg?auto=compress&cs=tinysrgb&w=1200';
+  return posts.map((p) => {
+    if (!p.featuredImage?.includes(BROKEN)) return p;
+    return { ...p, featuredImage: FIXED, socialImage: FIXED };
+  });
+}
+
 function loadPosts(): Post[] {
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
       const parsed = JSON.parse(stored) as Post[];
-      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        const migrated = migratePosts(parsed);
+        if (JSON.stringify(migrated) !== stored) {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(migrated));
+        }
+        return migrated;
+      }
     }
   } catch {
     // fall through to defaults
