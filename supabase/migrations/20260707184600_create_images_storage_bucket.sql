@@ -21,7 +21,9 @@ password-protected admin panel, so in practice only the admin triggers uploads.
 
 ## Security
 
-- Public SELECT: anyone can read images (they appear in public posts).
+- No SELECT policy: the bucket is `public = true`, so Supabase serves objects by
+  URL without a policy. Omitting the policy prevents API-level listing of all
+  files while keeping direct image URLs fully accessible.
 - Anon INSERT: admin browser uploads via the anon key.
 - No UPDATE or DELETE policies — images are write-once through the admin UI.
 */
@@ -36,9 +38,9 @@ VALUES (
 )
 ON CONFLICT (id) DO NOTHING;
 
+-- No SELECT policy needed: public bucket serves objects by URL without RLS.
+-- A broad SELECT policy would allow clients to enumerate all stored files.
 DROP POLICY IF EXISTS "images_public_select" ON storage.objects;
-CREATE POLICY "images_public_select" ON storage.objects FOR SELECT
-  TO public USING (bucket_id = 'images');
 
 DROP POLICY IF EXISTS "images_anon_insert" ON storage.objects;
 CREATE POLICY "images_anon_insert" ON storage.objects FOR INSERT
