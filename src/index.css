@@ -352,24 +352,23 @@
 
 .bandcamp-embed {
   width: 100%;
+  max-width: 350px;
   margin: 1.5em 0;
 }
 
 .bandcamp-embed iframe {
-  width: 100%;
+  width: 350px;
   height: 442px;
   border: 0;
   display: block;
 }
 
-@media (max-width: 600px) {
-  .bandcamp-embed iframe {
-    height: 420px;
-  }
-}
-
 @media (max-width: 400px) {
+  .bandcamp-embed {
+    max-width: 100%;
+  }
   .bandcamp-embed iframe {
+    width: 100%;
     height: 380px;
   }
 }
