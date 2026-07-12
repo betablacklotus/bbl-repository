@@ -31,6 +31,8 @@ function parsePath(): Route {
     return { path: '/tag', params: { tag: parts[1] } };
   if (parts.length === 2 && parts[0] === 'page')
     return { path: '/page', params: { slug: parts[1] } };
+  if (parts.length === 1 && parts[0] === 'gallery-preview')
+    return { path: '/gallery-preview', params: {} };
   if (parts.length === 1)
     return { path: '/post', params: { slug: parts[0] } };
 

@@ -8,6 +8,7 @@ import { ArchivePage } from './pages/ArchivePage';
 import { TagPage } from './pages/TagPage';
 import { AdminLoginPage } from './pages/AdminLoginPage';
 import { StandalonePage } from './pages/StandalonePage';
+import { GalleryPreviewPage } from './pages/GalleryPreviewPage';
 import { getAllPages, seedBuiltinPages } from './pageStore';
 
 seedBuiltinPages();
@@ -46,6 +47,9 @@ let page;
       break;
     case '/backstage-3k9mxf2p7qw4':
       page = <AdminLoginPage />;
+      break;
+    case '/gallery-preview':
+      page = <GalleryPreviewPage />;
       break;
     default:
       page = <AdminLoginPage />;
