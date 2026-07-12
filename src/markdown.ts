@@ -193,6 +193,11 @@ export function renderMarkdown(md: string): string {
       continue;
     }
 
+    // Empty lines don't break an in-progress gallery group
+    if (line.trim() === '') {
+      continue;
+    }
+
     // Gallery line: ![alt](url) on its own line — collect consecutive ones
     const galleryImgMatch = line.match(/^!\[([^\]]*)\]\(([^)]+)\)\s*$/);
     if (galleryImgMatch) {
@@ -258,11 +263,6 @@ export function renderMarkdown(md: string): string {
     if (inList) {
       html.push(inOl ? '</ol>' : '</ul>');
       inList = false;
-    }
-
-    // Empty line
-    if (line.trim() === '') {
-      continue;
     }
 
     // Paragraph

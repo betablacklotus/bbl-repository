@@ -187,78 +187,22 @@ I took a day and drove to the coast with no particular plan. Low tide was at hal
 ---
 
 ![Wet sand at low tide, early morning](https://images.pexels.com/photos/1533720/pexels-photo-1533720.jpeg?auto=compress&cs=tinysrgb&w=900)
-
-The tide had been out for about an hour when I arrived. The sand was still dark and the surface caught the overcast light like a mirror.
-
 ![Fishing boats moored in harbour](https://images.pexels.com/photos/163236/pexels-photo-163236.jpeg?auto=compress&cs=tinysrgb&w=900)
-
-The harbour had three working boats and a fourth that had not moved in a while, judging by the barnacles on the hull.
-
 ![Coiled rope on a wooden dock](https://images.pexels.com/photos/1001682/pexels-photo-1001682.jpeg?auto=compress&cs=tinysrgb&w=900)
-
-I like the weight that rope has when it is dry and old. It holds its shape without being told to.
-
 ![Peeling blue paint on a boat hull](https://images.pexels.com/photos/273886/pexels-photo-273886.jpeg?auto=compress&cs=tinysrgb&w=900)
-
-Three layers of paint at least, maybe four. White under blue under something that might have been red once.
-
 ![Fog sitting low over the water](https://images.pexels.com/photos/1547813/pexels-photo-1547813.jpeg?auto=compress&cs=tinysrgb&w=900)
-
-The fog did not move for a long time. It just sat there at the mouth of the harbour, thinking about something.
-
 ![Seabirds on a groyne at low water](https://images.pexels.com/photos/1266810/pexels-photo-1266810.jpeg?auto=compress&cs=tinysrgb&w=900)
-
-Seven birds, all facing the same direction for reasons they kept to themselves.
-
 ![Weathered wooden bollard](https://images.pexels.com/photos/2249959/pexels-photo-2249959.jpeg?auto=compress&cs=tinysrgb&w=900)
-
-The wood on these bollards is so old it has gone silver. No finish left, just grain and salt.
-
 ![Breakwater extending into a grey sea](https://images.pexels.com/photos/1533720/pexels-photo-1533720.jpeg?auto=compress&cs=tinysrgb&w=900&h=600&fit=crop)
-
-Walking the breakwater at low tide gives you about forty minutes before the water comes back. I had thirty-five.
-
----
-
-By this point the light had changed. The fog was thinning and things started to have shadows.
-
----
-
 ![Rock pools exposed at low tide](https://images.pexels.com/photos/2480078/pexels-photo-2480078.jpeg?auto=compress&cs=tinysrgb&w=900)
-
-The rock pools were full of things minding their own business.
-
 ![Kelp draped over dark rocks](https://images.pexels.com/photos/1450363/pexels-photo-1450363.jpeg?auto=compress&cs=tinysrgb&w=900&h=600&fit=crop)
-
-Kelp dries quickly when the tide is out. By the time I got back the smell had changed.
-
 ![Old stone sea wall, close texture](https://images.pexels.com/photos/1118873/pexels-photo-1118873.jpeg?auto=compress&cs=tinysrgb&w=900)
-
-The mortar in this wall is original. You can tell because it is softer than the stone around it — lime, not cement.
-
 ![Iron ladder descending to the water](https://images.pexels.com/photos/1670977/pexels-photo-1670977.jpeg?auto=compress&cs=tinysrgb&w=900)
-
-I did not go down. The bottom rung was green.
-
 ![Horizon line with a distant vessel](https://images.pexels.com/photos/1295138/pexels-photo-1295138.jpeg?auto=compress&cs=tinysrgb&w=900)
-
-There was a ship on the horizon for the entire morning. It never seemed to move, but it was in a different place each time I looked.
-
 ![Pebble beach, long exposure blur](https://images.pexels.com/photos/994605/pexels-photo-994605.jpeg?auto=compress&cs=tinysrgb&w=900)
-
-Slow shutter, not long exposure. There is a difference. The motion of the surf was there but not theatrical.
-
 ![Wooden beach hut, faded yellow](https://images.pexels.com/photos/1032650/pexels-photo-1032650.jpeg?auto=compress&cs=tinysrgb&w=900)
-
-Closed for the season, or maybe just closed. The padlock looked recent.
-
 ![Footprints in wet sand leading away](https://images.pexels.com/photos/1005014/pexels-photo-1005014.jpeg?auto=compress&cs=tinysrgb&w=900)
-
-Someone else had been here earlier. By the time I reached the end of the beach the tide had erased half of these.
-
 ![The sea, simply](https://images.pexels.com/photos/1295138/pexels-photo-1295138.jpeg?auto=compress&cs=tinysrgb&w=900&h=500&fit=crop)
-
-The last frame. The fog was gone, the tide was turning, and the light had gone ordinary. Time to go.
 
 ---
 
