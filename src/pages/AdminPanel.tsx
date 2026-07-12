@@ -1005,7 +1005,7 @@ function PostEditor({
             {isNew ? 'Create' : 'Save'}
           </button>
           <button onClick={() => onSaveAndView(draft)} className="btn btn-primary">
-            {isNew ? 'Create &amp; View' : 'Save &amp; View'}
+            {isNew ? 'Create & View' : 'Save & View'}
           </button>
         </div>
       </header>
