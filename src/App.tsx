@@ -5,13 +5,13 @@ import { HomePage } from './pages/HomePage';
 import { PostPage } from './pages/PostPage';
 import { VideosPage } from './pages/VideosPage';
 import { MusicPage } from './pages/MusicPage';
-import { AboutPage } from './pages/AboutPage';
 import { ArchivePage } from './pages/ArchivePage';
-import { ContactPage } from './pages/ContactPage';
 import { TagPage } from './pages/TagPage';
 import { AdminLoginPage } from './pages/AdminLoginPage';
 import { StandalonePage } from './pages/StandalonePage';
-import { getAllPages } from './pageStore';
+import { getAllPages, seedBuiltinPages } from './pageStore';
+
+seedBuiltinPages();
 
 function App() {
   const route = useRouter();
@@ -36,13 +36,13 @@ function App() {
       page = <MusicPage />;
       break;
     case '/EPK':
-      page = <AboutPage />;
+      page = <StandalonePage slug="epk" />;
       break;
     case '/archive':
       page = <ArchivePage />;
       break;
     case '/contact':
-      page = <ContactPage />;
+      page = <StandalonePage slug="contact" />;
       break;
     case '/tag':
       page = <TagPage tag={route.params.tag} />;

@@ -58,3 +58,50 @@ export function deletePage(slug: string): boolean {
   savePages(pages);
   return true;
 }
+
+const BUILTIN_PAGES: Page[] = [
+  {
+    slug: 'epk',
+    title: 'EPK',
+    showInHeader: false,
+    showInFooter: false,
+    excerpt: 'About Beta Black Lotus.',
+    content: `**Beta Black Lotus** is a personal weblog kept by its author. It is a notebook in public — a place to write down things I want to remember and share.
+
+## What I write about
+
+- Small software projects and the lessons learned from them
+- Books, mostly old ones
+- Field recordings and the places I made them
+- The occasional opinion about tools, held loosely
+
+## How this site is built
+
+This site is built to be lightweight and portable. It uses plain HTML, CSS, and a small amount of JavaScript. There is no tracking, no analytics, no cookie banner, and no newsletter popup. The font is IBM Plex Mono. The design is deliberately spare.
+
+The source is a set of static files that can be hosted on almost any web server, including inexpensive shared hosting. See the [contact page](/contact) if you want to reach me.
+
+## Subscribe
+
+If you use an RSS reader, you can subscribe to the [RSS feed](/feed.xml). That is the best way to keep up.`,
+  },
+  {
+    slug: 'contact',
+    title: 'Contact',
+    showInHeader: false,
+    showInFooter: false,
+    excerpt: 'How to reach the author of Beta Black Lotus.',
+    content: `The best way to reach me is by email. I read everything, though I cannot always reply.
+
+Write to me at you@example.com.`,
+  },
+];
+
+export function seedBuiltinPages(): void {
+  const existing = getAllPages().map((p) => p.slug);
+  for (const page of BUILTIN_PAGES) {
+    if (!existing.includes(page.slug)) {
+      createPage(page);
+    }
+  }
+}
