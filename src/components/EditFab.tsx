@@ -1,17 +1,28 @@
+import { useState, useEffect } from 'react';
 import { isLoggedIn } from '../adminAuth';
 import { navigate } from '../router';
 import { Pencil } from 'lucide-react';
 
 interface EditFabProps {
-  slug?: string; // post slug — if omitted, links to admin panel home
+  slug?: string;
+  type?: 'post' | 'page';
 }
 
-export function EditFab({ slug }: EditFabProps) {
-  if (!isLoggedIn()) return null;
+export function EditFab({ slug, type = 'post' }: EditFabProps) {
+  const [loggedIn, setLoggedIn] = useState(isLoggedIn());
+
+  useEffect(() => {
+    const sync = () => setLoggedIn(isLoggedIn());
+    window.addEventListener('storage', sync);
+    return () => window.removeEventListener('storage', sync);
+  }, []);
+
+  if (!loggedIn) return null;
 
   const handleClick = () => {
     if (slug) {
-      navigate(`/backstage-3k9mxf2p7qw4?edit=${encodeURIComponent(slug)}`);
+      const param = type === 'page' ? 'editPage' : 'edit';
+      navigate(`/backstage-3k9mxf2p7qw4?${param}=${encodeURIComponent(slug)}`);
     } else {
       navigate('/backstage-3k9mxf2p7qw4');
     }
@@ -20,7 +31,7 @@ export function EditFab({ slug }: EditFabProps) {
   return (
     <button
       onClick={handleClick}
-      aria-label={slug ? 'Edit this post' : 'Admin panel'}
+      aria-label={slug ? `Edit this ${type}` : 'Admin panel'}
       style={{
         position: 'fixed',
         bottom: '1.5rem',
@@ -45,7 +56,7 @@ export function EditFab({ slug }: EditFabProps) {
       onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.opacity = '0.85'; }}
     >
       <Pencil size={13} strokeWidth={2} />
-      {slug ? 'Edit Post' : 'Admin'}
+      {slug ? (type === 'page' ? 'Edit Page' : 'Edit Post') : 'Admin'}
     </button>
   );
 }

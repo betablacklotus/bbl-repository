@@ -5,6 +5,7 @@ import { useMeta } from '../seo';
 import { navigate } from '../router';
 import { MediaProtect } from '../components/MediaProtect';
 import { Lightbox, useLightbox } from '../components/Lightbox';
+import { EditFab } from '../components/EditFab';
 
 interface StandalonePageProps {
   slug: string;
@@ -98,6 +99,8 @@ export function StandalonePage({ slug }: StandalonePageProps) {
           onNavigate={navigateLightbox}
         />
       )}
+
+      <EditFab slug={page.slug} type="page" />
     </article>
   );
 }
