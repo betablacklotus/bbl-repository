@@ -1188,8 +1188,8 @@ function PostEditor({
                     key={`${draft.bandcampTrackId}|${draft.bandcampAlbumId}`}
                     src={
                       draft.bandcampTrackId
-                        ? `https://bandcamp.com/EmbeddedPlayer/track=${draft.bandcampTrackId}/size=large/bgcol=ffffff/linkcol=0687f5/minimal=true/transparent=true/`
-                        : `https://bandcamp.com/EmbeddedPlayer/album=${draft.bandcampAlbumId}/size=large/bgcol=ffffff/linkcol=0687f5/minimal=true/transparent=true/`
+                        ? `https://bandcamp.com/EmbeddedPlayer/track=${draft.bandcampTrackId}/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/`
+                        : `https://bandcamp.com/EmbeddedPlayer/album=${draft.bandcampAlbumId}/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/`
                     }
                     title="Bandcamp preview"
                     seamless

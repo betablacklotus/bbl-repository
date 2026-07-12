@@ -56,7 +56,7 @@ export function PostCard({ post, showPinBadge = true }: PostCardProps) {
       ) : bandcampTrackId ? (
         <div className="bandcamp-embed mb-4">
           <iframe
-            src={`https://bandcamp.com/EmbeddedPlayer/track=${bandcampTrackId}/size=large/bgcol=ffffff/linkcol=0687f5/minimal=true/transparent=true/`}
+            src={`https://bandcamp.com/EmbeddedPlayer/track=${bandcampTrackId}/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/`}
             title="Bandcamp player"
             seamless
             loading="lazy"

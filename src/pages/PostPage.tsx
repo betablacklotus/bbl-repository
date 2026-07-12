@@ -115,7 +115,7 @@ export function PostPage({ slug }: PostPageProps) {
       ) : bandcampEmbed ? (
         <div className="bandcamp-embed mb-8">
           <iframe
-            src={`https://bandcamp.com/EmbeddedPlayer/${bandcampEmbed.kind}=${bandcampEmbed.id}/size=large/bgcol=ffffff/linkcol=0687f5/minimal=true/transparent=true/`}
+            src={`https://bandcamp.com/EmbeddedPlayer/${bandcampEmbed.kind}=${bandcampEmbed.id}/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/`}
             title="Bandcamp player"
             seamless
             loading="lazy"
