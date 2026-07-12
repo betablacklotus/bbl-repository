@@ -1,5 +1,4 @@
 import { useRouter, navigate } from './router';
-import { useEffect } from 'react';
 import { Header } from './components/Header';
 import { HomePage } from './pages/HomePage';
 import { PostPage } from './pages/PostPage';
@@ -16,12 +15,7 @@ seedBuiltinPages();
 function App() {
   const route = useRouter();
 
-  // Preview: open admin panel on load
-  useEffect(() => {
-    if (route.path === '/') navigate('/backstage-3k9mxf2p7qw4');
-  }, []);
-
-  let page;
+let page;
   switch (route.path) {
     case '/':
       page = <HomePage />;

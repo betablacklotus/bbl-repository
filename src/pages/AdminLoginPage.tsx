@@ -18,7 +18,7 @@ import { AdminPanel } from './AdminPanel';
 export function AdminLoginPage() {
   useMeta({ title: 'Admin', description: 'Admin login.' });
 
-  const [loggedIn, setLoggedIn] = useState(true); // preview: bypasses auth gate
+  const [loggedIn, setLoggedIn] = useState(isLoggedIn());
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
