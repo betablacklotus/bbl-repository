@@ -180,6 +180,10 @@
     border-bottom: 1px solid #999999;
   }
 
+  .post-card:last-child {
+    border-bottom: none;
+  }
+
   .media-protect {
     -webkit-user-select: none;
     -moz-user-select: none;

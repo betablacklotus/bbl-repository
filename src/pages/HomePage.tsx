@@ -69,20 +69,16 @@ export function HomePage() {
       {hasMore && <div ref={sentinelRef} style={{ height: 1 }} />}
 
       {/* Load More fallback */}
-      <div className="py-10 flex flex-col items-center gap-3">
-        {hasMore ? (
-          <>
-            <button onClick={loadMore} disabled={loading} className="btn">
-              {loading ? 'Loading…' : 'Load More'}
-            </button>
-            <p className="text-xs text-muted">
-              {visibleCount} of {allPosts.length} posts
-            </p>
-          </>
-        ) : (
-          null
-        )}
-      </div>
+      {hasMore && (
+        <div className="py-10 flex flex-col items-center gap-3">
+          <button onClick={loadMore} disabled={loading} className="btn">
+            {loading ? 'Loading…' : 'Load More'}
+          </button>
+          <p className="text-xs text-muted">
+            {visibleCount} of {allPosts.length} posts
+          </p>
+        </div>
+      )}
     </div>
   );
 }
