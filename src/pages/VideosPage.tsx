@@ -8,7 +8,7 @@ export function VideosPage() {
   const posts = getVideoPosts();
 
   return (
-    <div className="max-w-prose mx-auto px-4 sm:px-6 pt-8 sm:pt-10 pb-20">
+    <div className="max-w-prose mx-auto px-4 sm:px-6 pt-8 sm:pt-10">
       <header className="border-b rule pb-6 mb-8">
         <h1 className="text-2xl sm:text-3xl font-semibold">Videos</h1>
       </header>
